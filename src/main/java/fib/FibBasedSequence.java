@@ -1,5 +1,7 @@
 package fib;
 
+import java.util.List;
+
 public class FibBasedSequence {
     private int[] mem;
     private String name;
@@ -8,20 +10,28 @@ public class FibBasedSequence {
     static final String DELIMITER = "::";
     
     public FibBasedSequence(int first, int second) {
-        this("Sequence #" + NUM_SEQUENCES++, first, second);
+        this("Sequence #" + NUM_SEQUENCES++, new int[] { first, second });
     }
     
     public FibBasedSequence(String name, int first, int second) {
+        this(name, new int[] { first, second });
+    }    
+
+    public FibBasedSequence(int[] baseCases) {  
+        this("Sequence #" + NUM_SEQUENCES++, baseCases);
+    }
+
+    public FibBasedSequence(String name, int[] baseCases) {
         this.name = name;
 
         this.mem = new int[FibManager.getNumElements() + 1];
-        mem[0] = first;
-        mem[1] = second;
+        for(int i = 0; i < baseCases.length; i++) {
+            mem[i] = baseCases[i];
+        }
         
         for(int i = 2; i <= FibManager.getNumElements(); i++) {
             mem[i] = recurrence(i, mem);
-        }       
-        
+        }     
     }
 
     private int recurrence(int i, int[] arr) {

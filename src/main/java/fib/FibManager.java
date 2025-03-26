@@ -20,6 +20,14 @@ public class FibManager {
         return addSequence(new FibBasedSequence(name, first, second));
     }
 
+    public FibBasedSequence add(int[] baseCases) {
+        return addSequence(new FibBasedSequence(baseCases));
+    }
+
+    public FibBasedSequence add(String name, int[] baseCases) {
+        return addSequence(new FibBasedSequence(name, baseCases));
+    }
+
     private FibBasedSequence addSequence(FibBasedSequence toAdd) {
         sequences.add(toAdd);
         return toAdd;

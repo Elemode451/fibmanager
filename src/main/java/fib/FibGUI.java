@@ -1,6 +1,7 @@
 package fib;
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.io.IOException;
 import java.util.stream.Collectors;
@@ -98,29 +99,42 @@ public class FibGUI extends JFrame {
 
         addButton.addActionListener(e -> {
             JTextField nameField = new JTextField(10);
-            JTextField firstTermField = new JTextField(5);
-            JTextField secondTermField = new JTextField(5);
+            java.util.List<JTextField> termFields = new ArrayList<>();
 
-            JPanel dialogPanel = new JPanel(new GridLayout(3, 2, 5, 5));
+            JPanel dialogPanel = new JPanel();
+            dialogPanel.setLayout(new BoxLayout(dialogPanel, BoxLayout.Y_AXIS));
             dialogPanel.add(new JLabel("Name:"));
             dialogPanel.add(nameField);
-            dialogPanel.add(new JLabel("First Term:"));
-            dialogPanel.add(firstTermField);
-            dialogPanel.add(new JLabel("Second Term:"));
-            dialogPanel.add(secondTermField);
+
+            JPanel termPanel = new JPanel();
+            termPanel.setLayout(new BoxLayout(termPanel, BoxLayout.Y_AXIS));
+
+            JButton addTermButton = new JButton("Add Term");
+            addTermButton.addActionListener(ev -> {
+                JTextField termField = new JTextField(5);
+                termFields.add(termField);
+                termPanel.add(termField);
+                dialogPanel.revalidate();
+                dialogPanel.repaint();
+            });
+
+            for (int i = 0; i < 2; i++) addTermButton.doClick();
+
+            dialogPanel.add(new JLabel("Terms:"));
+            dialogPanel.add(termPanel);
+            dialogPanel.add(addTermButton);
 
             int result = JOptionPane.showConfirmDialog(this, dialogPanel, "Add New Sequence", JOptionPane.OK_CANCEL_OPTION);
 
             if (result == JOptionPane.OK_OPTION) {
                 try {
                     String name = nameField.getText().trim();
-                    int first = Integer.parseInt(firstTermField.getText().trim());
-                    int second = Integer.parseInt(secondTermField.getText().trim());
-                    FibBasedSequence seq = name.isEmpty() ? fm.add(first, second) : fm.add(name, first, second);
+                    int[] terms = termFields.stream().map(JTextField::getText).map(String::trim).mapToInt(Integer::parseInt).toArray();
+                    var seq = fm.add(name, terms);
                     compareLeft.addItem(seq);
                     compareRight.addItem(seq);
                 } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(this, "First/second terms must be integers.", "Invalid input", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "All terms must be integers.", "Invalid input", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });

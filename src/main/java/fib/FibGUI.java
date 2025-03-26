@@ -67,8 +67,8 @@ public class FibGUI extends JFrame {
         midPanel.add(compPanel);
 
         // BOTTOM RENDER BUTTONS
-        JButton renderLeft = new JButton("Render " + leftSeq.toString());
-        JButton renderRight = new JButton("Render " + rightSeq.toString());
+        JButton renderLeft = new JButton("Render " + leftSeq.getNameString());
+        JButton renderRight = new JButton("Render " + rightSeq.getNameString());
         JButton renderComp = new JButton("Render comparison");
 
         JPanel bottomButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));

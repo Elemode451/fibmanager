@@ -26,7 +26,7 @@ public class FibManager {
     }
 
     public FibBasedSequence getByName(String name) {
-        String[] split = name.split("|");
+        String[] split = name.split(FibBasedSequence.DELIMITER);
         return new FibBasedSequence(split[0], Integer.valueOf(split[1]), Integer.valueOf(split[2]));
     }
 

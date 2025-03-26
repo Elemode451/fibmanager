@@ -4,6 +4,8 @@ public class FibBasedSequence {
     private int[] mem;
     private String name;
     private static int NUM_SEQUENCES = 1;
+    private int BASE_CASES = 2; // will add more than 2 base cases later
+    private static final String DELIMITER = "::";
     
     public FibBasedSequence(int first, int second) {
         this("Sequence #" + NUM_SEQUENCES++, first, second);
@@ -69,9 +71,21 @@ public class FibBasedSequence {
         return build.toString();
     }
 
-    @Override
-    public String toString() {
+    public String getNameString() {
         return name;
+    }
+
+    public String toString() {
+        StringBuilder build = new StringBuilder();
+        build.append(name);
+        build.append(DELIMITER);
+
+        for(int i = 0; i < BASE_CASES; i++) {
+            build.append(mem[i]);
+            build.append(DELIMITER);
+        }
+
+        return build.toString();
     }
 
 

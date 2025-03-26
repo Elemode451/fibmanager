@@ -67,8 +67,8 @@ public class FibGUI extends JFrame {
         midPanel.add(compPanel);
 
         // BOTTOM RENDER BUTTONS
-        JButton renderLeft = new JButton("Render " + leftSeq.getNameString());
-        JButton renderRight = new JButton("Render " + rightSeq.getNameString());
+        JButton renderLeft = new JButton("Render " + leftSeq);
+        JButton renderRight = new JButton("Render " + rightSeq);
         JButton renderComp = new JButton("Render comparison");
 
         JPanel bottomButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -125,23 +125,27 @@ public class FibGUI extends JFrame {
             }
         });
 
-        renderLeft.addActionListener(e -> {
-            SceneRenderer.run(
-                List.of(leftSeq)
-            );
-        });
+        // renderLeft.addActionListener(e -> {
+        //     SceneRenderer.run(
+        //         List.of(leftSeq)
+        //     );
+        // });
         
-        renderRight.addActionListener(e -> {
-            SceneRenderer.run(
-                List.of(rightSeq)
-            );
-        });
+        // renderRight.addActionListener(e -> {
+        //     SceneRenderer.run(
+        //         List.of(rightSeq)
+        //     );
+        // });
 
-        renderComp.addActionListener(e -> {
-            SceneRenderer.run(
-                List.of(leftSeq, rightSeq)
-            );
-        });
+        // renderComp.addActionListener(e -> {
+        //     SceneRenderer.run(
+        //         List.of(leftSeq, rightSeq)
+        //     );
+        // });
+
+        renderLeft.addActionListener(e -> runSceneWithSequences(List.of(leftSeq)));
+        renderRight.addActionListener(e -> runSceneWithSequences(List.of(rightSeq)));
+        renderComp.addActionListener(e -> runSceneWithSequences(List.of(leftSeq, rightSeq)));
 
         // ADD TO FRAME
         add(topPanel, BorderLayout.PAGE_START);
@@ -174,4 +178,26 @@ public class FibGUI extends JFrame {
                 "\n" + FibManager.generateComparison(leftSeq, rightSeq));
         button.setText("Render " + selected);
     }
+
+    private void runSceneWithSequences(List<FibBasedSequence> sequences) {
+        try {
+            String classpath = System.getProperty("java.class.path");
+            String[] args = sequences.stream().map(FibBasedSequence::serialize).toArray(String[]::new);
+    
+            String[] command = new String[4 + args.length];
+            command[0] = "java";
+            command[1] = "-cp";
+            command[2] = classpath;
+            command[3] = "fib.SceneRenderer";
+            System.arraycopy(args, 0, command, 4, args.length);
+    
+            new ProcessBuilder(command)
+                .inheritIO()
+                .start();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Failed to launch render scene.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
 }

@@ -5,7 +5,7 @@ public class FibBasedSequence {
     private String name;
     private static int NUM_SEQUENCES = 1;
     private int BASE_CASES = 2; // will add more than 2 base cases later
-    private static final String DELIMITER = "::";
+    static final String DELIMITER = "::";
     
     public FibBasedSequence(int first, int second) {
         this("Sequence #" + NUM_SEQUENCES++, first, second);
@@ -71,11 +71,11 @@ public class FibBasedSequence {
         return build.toString();
     }
 
-    public String getNameString() {
+    public String toString() {
         return name;
     }
 
-    public String toString() {
+    public String serialize() {
         StringBuilder build = new StringBuilder();
         build.append(name);
         build.append(DELIMITER);

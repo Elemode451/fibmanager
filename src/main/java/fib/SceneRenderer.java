@@ -1,17 +1,12 @@
 package fib;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
-
 import com.jmathanim.Utils.PathUtils;
 import com.jmathanim.jmathanim.JMathAnimScene;
 import com.jmathanim.jmathanim.Scene2D;
-import com.jmathanim.mathobjects.MathObject.Align;
-import com.jmathanim.mathobjects.Text.LaTeXMathObject;
 import com.jmathanim.mathobjects.Point;
 import com.jmathanim.mathobjects.Shape;
 import com.jmathanim.mathobjects.Axes.Axes;

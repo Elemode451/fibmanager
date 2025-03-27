@@ -1,6 +1,6 @@
 package fib;
 
-import java.util.List;
+import java.util.Arrays;
 
 public class FibBasedSequence {
     private int[] mem;
@@ -23,13 +23,13 @@ public class FibBasedSequence {
 
     public FibBasedSequence(String name, int[] baseCases) {
         this.name = name;
-
+        this.BASE_CASES = baseCases.length;
         this.mem = new int[FibManager.getNumElements() + 1];
         for(int i = 0; i < baseCases.length; i++) {
             mem[i] = baseCases[i];
         }
         
-        for(int i = 2; i <= FibManager.getNumElements(); i++) {
+        for(int i = BASE_CASES; i <= FibManager.getNumElements(); i++) {
             mem[i] = recurrence(i, mem);
         }     
     }

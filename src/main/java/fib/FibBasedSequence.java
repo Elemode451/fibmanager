@@ -1,7 +1,5 @@
 package fib;
 
-import java.util.Arrays;
-
 public class FibBasedSequence {
     private int[] mem;
     private String name;
